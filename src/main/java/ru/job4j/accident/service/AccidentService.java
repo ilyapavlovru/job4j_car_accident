@@ -18,4 +18,8 @@ public class AccidentService {
     public Collection<Accident> findAllAccidents() {
         return store.findAllAccidents();
     }
+
+    public void saveAccident(Accident accident) {
+        store.saveAccident(accident);
+    }
 }

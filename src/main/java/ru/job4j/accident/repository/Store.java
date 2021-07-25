@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface Store {
 
     Collection<Accident> findAllAccidents();
+
+    void saveAccident(Accident accident);
 }

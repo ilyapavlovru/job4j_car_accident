@@ -24,6 +24,15 @@
 
 
 <body>
+
+<div class="row">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент</a>
+        </li>
+    </ul>
+</div>
+
 <div class="container">
     <h2>Все заявления</h2>
     <div class="row">
@@ -32,6 +41,7 @@
 
                 <thead>
                 <tr>
+                    <th scope="col">Наименование нарушения</th>
                     <th scope="col">Адрес нарушения</th>
                     <th scope="col">Номер машины</th>
                     <th scope="col">Описание нарушения</th>
@@ -43,6 +53,9 @@
                 <tbody id="allUsersTable">
                 <c:forEach items="${accidents}" var="accident">
                 <tr>
+                    <td>
+                        <c:out value="${accident.name}"/>
+                    </td>
                     <td>
                         <c:out value="${accident.address}"/>
                     </td>

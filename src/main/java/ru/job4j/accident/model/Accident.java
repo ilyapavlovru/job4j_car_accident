@@ -16,18 +16,22 @@ public class Accident {
     private Date created;
     private User user;
 
-    public Accident(int id, String name, String description, String carNumber, String address,
-                    byte[] image, String status, User user) {
-        this.id = id;
+    public Accident(String name) {
         this.name = name;
-        this.description = description;
-        this.carNumber = carNumber;
-        this.address = address;
-        this.image = image;
-        this.status = status;
-        this.created = new Date(System.currentTimeMillis());
-        this.user = user;
     }
+
+//    public Accident(int id, String name, String description, String carNumber, String address,
+//                    byte[] image, String status, User user) {
+//        this.id = id;
+//        this.name = name;
+//        this.description = description;
+//        this.carNumber = carNumber;
+//        this.address = address;
+//        this.image = image;
+//        this.status = status;
+//        this.created = new Date(System.currentTimeMillis());
+//        this.user = user;
+//    }
 
     public int getId() {
         return id;
