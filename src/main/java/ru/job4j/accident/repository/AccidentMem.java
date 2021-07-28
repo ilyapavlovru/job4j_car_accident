@@ -2,6 +2,7 @@ package ru.job4j.accident.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.User;
 
 import java.util.*;
@@ -25,6 +26,7 @@ public class AccidentMem implements Store {
 
         Accident accident1 = new Accident("нарушение 1");
         accident1.setId(1);
+        accident1.setType(AccidentType.of(1, "Две машины"));
         accident1.setDescription("описание нарушения 1");
         accident1.setCarNumber("н777ту178");
         accident1.setAddress("СПБ, ул. Симонова, д. 1");
@@ -35,6 +37,7 @@ public class AccidentMem implements Store {
 
         Accident accident2 = new Accident("нарушение 2");
         accident2.setId(2);
+        accident2.setType(AccidentType.of(2, "Машина и человек"));
         accident2.setDescription("описание нарушения 2");
         accident2.setCarNumber("с008уу78");
         accident2.setAddress("СПБ, ул. Кустодиева, д. 25");

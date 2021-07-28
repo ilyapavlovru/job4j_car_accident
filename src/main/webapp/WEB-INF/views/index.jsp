@@ -42,6 +42,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Наименование нарушения</th>
+                    <th scope="col">Тип нарушения</th>
                     <th scope="col">Адрес нарушения</th>
                     <th scope="col">Номер машины</th>
                     <th scope="col">Описание нарушения</th>
@@ -58,6 +59,17 @@
                             <i class="fa fa-edit mr-3"></i>
                         </a>
                         <c:out value="${accident.name}"/>
+                    </td>
+                    <td>
+                        <c:if test="${accident.type.id == 1}">
+                            Две машины
+                        </c:if>
+                        <c:if test="${accident.type.id == 2}">
+                            Машина и человек
+                        </c:if>
+                        <c:if test="${accident.type.id == 3}">
+                            Машина и велосипед
+                        </c:if>
                     </td>
                     <td>
                         <c:out value="${accident.address}"/>

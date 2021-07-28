@@ -15,6 +15,7 @@ public class Accident {
     private String status;
     private Date created;
     private User user;
+    private AccidentType type;
 
     public Accident(String name) {
         this.name = name;
@@ -104,6 +105,14 @@ public class Accident {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
     }
 
     @Override

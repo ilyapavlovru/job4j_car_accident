@@ -65,6 +65,15 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="accidentTypeSelector">Тип нарушения:</label>
+                        <select class="form-control" id="accidentTypeSelector" name="type.id">
+                            <c:forEach var="type" items="${types}" >
+                                <option value="${type.id}">${type.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
                     <input type="hidden" name="action" value="update"/>
                     <button type="submit" value="UPDATE" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
