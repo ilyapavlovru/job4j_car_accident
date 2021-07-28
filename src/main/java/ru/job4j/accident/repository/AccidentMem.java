@@ -4,10 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.User;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -61,5 +58,10 @@ public class AccidentMem implements Store {
             accident.setId(ACCIDENT_ID.incrementAndGet());
         }
         accidents.put(accident.getId(), accident);
+    }
+
+    @Override
+    public Optional<Accident> findAccidentById(int id) {
+        return Optional.ofNullable(accidents.get(id));
     }
 }
