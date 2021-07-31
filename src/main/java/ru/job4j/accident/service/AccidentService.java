@@ -2,6 +2,7 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.Store;
 
 import java.util.Collection;
@@ -21,10 +22,16 @@ public class AccidentService {
     }
 
     public void saveAccident(Accident accident) {
+        Optional<AccidentType> accidentType = store.findAccidentTypeById(accident.getType().getId());
+        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
         store.saveAccident(accident);
     }
 
     public Optional<Accident> findById(int id) {
         return store.findAccidentById(id);
+    }
+
+    public Collection<AccidentType> findAllAccidentTypes() {
+        return store.findAllAccidentTypes();
     }
 }

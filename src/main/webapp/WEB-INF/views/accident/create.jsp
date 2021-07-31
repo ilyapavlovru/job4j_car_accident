@@ -28,7 +28,7 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новое нарушение / Редактирование нарушения
+                Новое нарушение
             </div>
 
             <div class="card-body">

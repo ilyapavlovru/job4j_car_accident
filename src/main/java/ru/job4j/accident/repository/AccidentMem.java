@@ -14,6 +14,8 @@ public class AccidentMem implements Store {
 
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
+    private final Map<Integer, AccidentType> accidentTypes = new HashMap<>();
+
     private final static AtomicInteger ACCIDENT_ID = new AtomicInteger(2);
 
     public static Store instOf() {
@@ -24,9 +26,13 @@ public class AccidentMem implements Store {
 
         User user = new User();
 
+        accidentTypes.put(1, AccidentType.of(1, "Две машины"));
+        accidentTypes.put(2, AccidentType.of(2, "Машина и человек"));
+        accidentTypes.put(3, AccidentType.of(3, "Машина и велосипед"));
+
         Accident accident1 = new Accident("нарушение 1");
         accident1.setId(1);
-        accident1.setType(AccidentType.of(1, "Две машины"));
+        accident1.setType(accidentTypes.get(1));
         accident1.setDescription("описание нарушения 1");
         accident1.setCarNumber("н777ту178");
         accident1.setAddress("СПБ, ул. Симонова, д. 1");
@@ -37,7 +43,7 @@ public class AccidentMem implements Store {
 
         Accident accident2 = new Accident("нарушение 2");
         accident2.setId(2);
-        accident2.setType(AccidentType.of(2, "Машина и человек"));
+        accident2.setType(accidentTypes.get(2));
         accident2.setDescription("описание нарушения 2");
         accident2.setCarNumber("с008уу78");
         accident2.setAddress("СПБ, ул. Кустодиева, д. 25");
@@ -66,5 +72,15 @@ public class AccidentMem implements Store {
     @Override
     public Optional<Accident> findAccidentById(int id) {
         return Optional.ofNullable(accidents.get(id));
+    }
+
+    @Override
+    public Collection<AccidentType> findAllAccidentTypes() {
+        return accidentTypes.values();
+    }
+
+    @Override
+    public Optional<AccidentType> findAccidentTypeById(int id) {
+        return Optional.ofNullable(accidentTypes.get(id));
     }
 }

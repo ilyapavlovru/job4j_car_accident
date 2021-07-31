@@ -61,15 +61,7 @@
                         <c:out value="${accident.name}"/>
                     </td>
                     <td>
-                        <c:if test="${accident.type.id == 1}">
-                            Две машины
-                        </c:if>
-                        <c:if test="${accident.type.id == 2}">
-                            Машина и человек
-                        </c:if>
-                        <c:if test="${accident.type.id == 3}">
-                            Машина и велосипед
-                        </c:if>
+                        <c:out value="${accident.type.name}"/>
                     </td>
                     <td>
                         <c:out value="${accident.address}"/>
