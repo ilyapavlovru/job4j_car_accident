@@ -2,15 +2,16 @@ package ru.job4j.accident.model;
 
 import java.util.Objects;
 
-public class AccidentType {
+public class Rule {
+
     private int id;
     private String name;
 
-    public static AccidentType of(int id, String name) {
-        AccidentType type = new AccidentType();
-        type.id = id;
-        type.name = name;
-        return type;
+    public static Rule of(int id, String name) {
+        Rule rule = new Rule();
+        rule.id = id;
+        rule.name = name;
+        return rule;
     }
 
     public int getId() {
@@ -37,8 +38,8 @@ public class AccidentType {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AccidentType that = (AccidentType) o;
-        return id == that.id;
+        Rule rule = (Rule) o;
+        return id == rule.id;
     }
 
     @Override

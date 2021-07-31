@@ -3,6 +3,7 @@ package ru.job4j.accident.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.Store;
 
 import java.util.Collection;
@@ -21,9 +22,18 @@ public class AccidentService {
         return store.findAllAccidents();
     }
 
-    public void saveAccident(Accident accident) {
+    public void saveAccident(Accident accident, String[] ruleIds) {
         Optional<AccidentType> accidentType = store.findAccidentTypeById(accident.getType().getId());
         accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+
+        for (String id : ruleIds) {
+            Optional<Rule> optionalRule = store.findRuleById(Integer.parseInt(id));
+            optionalRule.ifPresent(rule -> {
+                accident.addRule(rule);
+            });
+
+        }
+
         store.saveAccident(accident);
     }
 
@@ -33,5 +43,9 @@ public class AccidentService {
 
     public Collection<AccidentType> findAllAccidentTypes() {
         return store.findAllAccidentTypes();
+    }
+
+    public Collection<Rule> findAllRules() {
+        return store.findAllRules();
     }
 }

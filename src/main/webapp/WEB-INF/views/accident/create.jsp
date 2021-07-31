@@ -74,6 +74,15 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="ruleTypeSelector">Статьи:</label>
+                        <select class="form-control" id="ruleTypeSelector" name="rIds" multiple>
+                            <c:forEach var="rule" items="${rules}" >
+                                <option value="${rule.id}">${rule.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
                     <input type="hidden" name="action" value="update"/>
                     <button type="submit" value="UPDATE" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>

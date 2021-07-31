@@ -3,6 +3,7 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.model.User;
 
 import java.util.*;
@@ -15,6 +16,8 @@ public class AccidentMem implements Store {
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
     private final Map<Integer, AccidentType> accidentTypes = new HashMap<>();
+
+    private final Map<Integer, Rule> rules = new HashMap<>();
 
     private final static AtomicInteger ACCIDENT_ID = new AtomicInteger(2);
 
@@ -29,6 +32,10 @@ public class AccidentMem implements Store {
         accidentTypes.put(1, AccidentType.of(1, "Две машины"));
         accidentTypes.put(2, AccidentType.of(2, "Машина и человек"));
         accidentTypes.put(3, AccidentType.of(3, "Машина и велосипед"));
+
+        rules.put(1, Rule.of(1, "Статья. 1"));
+        rules.put(2, Rule.of(2, "Статья. 2"));
+        rules.put(3, Rule.of(3, "Статья. 3"));
 
         Accident accident1 = new Accident("нарушение 1");
         accident1.setId(1);
@@ -82,5 +89,15 @@ public class AccidentMem implements Store {
     @Override
     public Optional<AccidentType> findAccidentTypeById(int id) {
         return Optional.ofNullable(accidentTypes.get(id));
+    }
+
+    @Override
+    public Optional<Rule> findRuleById(int id) {
+        return Optional.ofNullable(rules.get(id));
+    }
+
+    @Override
+    public Collection<Rule> findAllRules() {
+        return rules.values();
     }
 }
