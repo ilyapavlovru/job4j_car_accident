@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/ilyapavlovru/job4j_car_accident.svg?branch=master)](https://travis-ci.com/ilyapavlovru/job4j_car_accident)
+[![codecov](https://codecov.io/gh/ilyapavlovru/job4j_car_accident/branch/master/graph/badge.svg?token=L2BPE61UMH)](https://codecov.io/gh/ilyapavlovru/job4j_car_accident)
+
 Проект "Автонарушители"
 =========================================
 
