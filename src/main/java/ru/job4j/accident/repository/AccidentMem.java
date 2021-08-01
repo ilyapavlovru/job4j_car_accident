@@ -37,9 +37,17 @@ public class AccidentMem implements Store {
         rules.put(2, Rule.of(2, "Статья. 2"));
         rules.put(3, Rule.of(3, "Статья. 3"));
 
+        Set<Rule> firstRulesSet = new HashSet<>();
+        firstRulesSet.add(rules.get(1));
+
+        Set<Rule> secondRulesSet = new HashSet<>();
+        secondRulesSet.add(rules.get(2));
+        secondRulesSet.add(rules.get(3));
+
         Accident accident1 = new Accident("нарушение 1");
         accident1.setId(1);
         accident1.setType(accidentTypes.get(1));
+        accident1.setRules(firstRulesSet);
         accident1.setDescription("описание нарушения 1");
         accident1.setCarNumber("н777ту178");
         accident1.setAddress("СПБ, ул. Симонова, д. 1");
@@ -51,6 +59,7 @@ public class AccidentMem implements Store {
         Accident accident2 = new Accident("нарушение 2");
         accident2.setId(2);
         accident2.setType(accidentTypes.get(2));
+        accident2.setRules(secondRulesSet);
         accident2.setDescription("описание нарушения 2");
         accident2.setCarNumber("с008уу78");
         accident2.setAddress("СПБ, ул. Кустодиева, д. 25");

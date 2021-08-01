@@ -43,6 +43,7 @@
                 <tr>
                     <th scope="col">Наименование нарушения</th>
                     <th scope="col">Тип нарушения</th>
+                    <th scope="col">Статьи нарушения</th>
                     <th scope="col">Адрес нарушения</th>
                     <th scope="col">Номер машины</th>
                     <th scope="col">Описание нарушения</th>
@@ -63,9 +64,17 @@
                     <td>
                         <c:out value="${accident.type.name}"/>
                     </td>
+
+                    <td>
+                        <c:forEach items="${accident.rules}" var="rule">
+                            <c:out value="${rule.name}"/> <br>
+                        </c:forEach>
+                    </td>
+
                     <td>
                         <c:out value="${accident.address}"/>
                     </td>
+
                     <td>
                         <c:out value="${accident.carNumber}"/>
                     </td>
