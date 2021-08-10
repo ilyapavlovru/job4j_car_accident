@@ -22,7 +22,6 @@
     <title>Сайт Автонарушители</title>
 </head>
 
-
 <body>
 
 <div class="row">
@@ -42,52 +41,27 @@
                 <thead>
                 <tr>
                     <th scope="col">Наименование нарушения</th>
-                    <th scope="col">Тип нарушения</th>
                     <th scope="col">Статьи нарушения</th>
-                    <th scope="col">Адрес нарушения</th>
-                    <th scope="col">Номер машины</th>
-                    <th scope="col">Описание нарушения</th>
-                    <th scope="col">Фотография нарушения</th>
-                    <th scope="col">Статус нарушения</th>
                 </tr>
                 </thead>
 
-                <tbody id="allUsersTable">
+                <tbody id="allAccidentsTable">
                 <c:forEach items="${accidents}" var="accident">
-                <tr>
-                    <td>
-                        <a href='<c:url value="/update?id=${accident.id}"/>'>
-                            <i class="fa fa-edit mr-3"></i>
-                        </a>
-                        <c:out value="${accident.name}"/>
-                    </td>
-                    <td>
-                        <c:out value="${accident.type.name}"/>
-                    </td>
+                    <tr>
+                        <td>
+                            <a href='<c:url value="/update?id=${accident.id}"/>'>
+                                <i class="fa fa-edit mr-3"></i>
+                            </a>
+                            <c:out value="${accident.name}"/>
+                        </td>
 
-                    <td>
-                        <c:forEach items="${accident.rules}" var="rule">
-                            <c:out value="${rule.name}"/> <br>
-                        </c:forEach>
-                    </td>
+                        <td>
+                            <c:forEach items="${accident.rules}" var="rule">
+                                <c:out value="${rule.name}"/> <br>
+                            </c:forEach>
+                        </td>
 
-                    <td>
-                        <c:out value="${accident.address}"/>
-                    </td>
-
-                    <td>
-                        <c:out value="${accident.carNumber}"/>
-                    </td>
-                    <td>
-                        <c:out value="${accident.description}"/>
-                    </td>
-                    <td>
-                        <c:out value="${accident.image}"/>
-                    </td>
-                    <td>
-                        <c:out value="${accident.status}"/>
-                    </td>
-                </tr>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>

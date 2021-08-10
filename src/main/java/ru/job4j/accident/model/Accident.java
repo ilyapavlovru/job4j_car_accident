@@ -20,6 +20,10 @@ public class Accident {
         this.name = name;
     }
 
+    public Accident() {
+
+    }
+
 //    public Accident(int id, String name, String description, String carNumber, String address,
 //                    byte[] image, String status, User user) {
 //        this.id = id;
