@@ -3,10 +3,14 @@ package ru.job4j.accident.controler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentJdbcTemplate;
-import ru.job4j.accident.service.AccidentService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @Controller
@@ -28,6 +32,25 @@ public class IndexControl {
     public String index(Model model) {
         model.addAttribute("accidents", accidents.getAllAccidentsWithRules());
         return "index";
+    }
+
+    @GetMapping("/createAccident")
+    public String create(Model model) {
+
+        Collection<AccidentType> types = accidents.findAllAccidentTypes();
+        model.addAttribute("types", types);
+
+        Collection<Rule> rules = accidents.findAllRules();
+        model.addAttribute("rules", rules);
+
+        return "accident/create";
+    }
+
+    @PostMapping("/saveAccident")
+    public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
+        String[] rIds = req.getParameterValues("rIds");
+        accidents.saveAccident(accident, rIds);
+        return "redirect:/";
     }
 
 //    @GetMapping("/")

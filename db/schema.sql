@@ -10,7 +10,13 @@ create table rule
     name varchar(255)
 );
 
-create table item_category
+create table accident_type
+(
+    id   serial primary key,
+    name varchar(255)
+);
+
+create table accident_rule
 (
     accident_id       integer not null
         constraint accident_sub_id_fk

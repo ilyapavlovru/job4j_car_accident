@@ -24,12 +24,18 @@
 
 <body>
 
-<div class="row">
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент</a>
-        </li>
-    </ul>
+<div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент (old)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/createAccident'/>">Добавить инцидент</a>
+            </li>
+        </ul>
+    </div>
+    <hr align="left" size="5">
 </div>
 
 <div class="container">

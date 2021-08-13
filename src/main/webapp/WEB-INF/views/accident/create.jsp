@@ -33,7 +33,7 @@
 
             <div class="card-body">
 
-                <form action="<c:url value='/save'/>" method="post">
+                <form action="<c:url value='/saveAccident'/>" method="post">
 
                     <div class="form-group">
                         <label>Заголовок нарушения:</label>
