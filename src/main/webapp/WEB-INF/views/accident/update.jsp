@@ -31,12 +31,32 @@
             </div>
 
             <div class="card-body">
-                <form action="<c:url value='/save?id=${accident.id}'/>" method="post">
+                <form action="<c:url value='/saveAccident?id=${accident.id}'/>" method="post">
 
                     <div class="form-group">
                         <label>Заголовок нарушения:</label>
                         <input type="text" class="form-control" id="name" name="name" value="${accident.name}">
                     </div>
+
+                    <div class="form-group">
+                        <label for="accidentTypeSelector">Тип нарушения:</label>
+                        <select class="form-control" id="accidentTypeSelector" name="type.id">
+                            <option selected value="${accident.type.id}">${accident.type.name}</option>
+                            <c:forEach var="type" items="${types}" >
+                                <option value="${type.id}">${type.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruleTypeSelector">Статьи:</label>
+                        <select class="form-control" id="ruleTypeSelector" name="rIds" multiple>
+                            <c:forEach var="rule" items="${rules}" >
+                                <option value="${rule.id}">${rule.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
                     <input type="hidden" name="action" value="update"/>
                     <button type="submit" value="UPDATE" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
@@ -45,5 +65,23 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    var optionsToSelect = [];
+    <c:forEach items="${accident.rules}" var="rule">
+        var ruleName = '<c:out value="${rule.name}"/>';
+        optionsToSelect.push(ruleName);
+    </c:forEach>
+
+    var select = document.getElementById('ruleTypeSelector');
+    for (var i = 0, l = select.options.length, o; i < l; i++) {
+        o = select.options[i];
+        if (optionsToSelect.indexOf(o.text) != -1) {
+            o.selected = true;
+        }
+    }
+</script>
+
 </body>
 </html>

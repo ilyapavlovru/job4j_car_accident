@@ -55,7 +55,7 @@
                 <c:forEach items="${accidents}" var="accident">
                     <tr>
                         <td>
-                            <a href='<c:url value="/update?id=${accident.id}"/>'>
+                            <a href='<c:url value="/updateAccident?id=${accident.id}"/>'>
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
                             <c:out value="${accident.name}"/>

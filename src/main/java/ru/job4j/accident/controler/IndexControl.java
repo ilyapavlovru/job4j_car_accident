@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -12,6 +13,7 @@ import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 public class IndexControl {
@@ -30,7 +32,7 @@ public class IndexControl {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("accidents", accidents.getAllAccidentsWithRules());
+        model.addAttribute("accidents", accidents.findAllAccidentsWithRules());
         return "index";
     }
 
@@ -51,6 +53,21 @@ public class IndexControl {
         String[] rIds = req.getParameterValues("rIds");
         accidents.saveAccident(accident, rIds);
         return "redirect:/";
+    }
+
+    @GetMapping("/updateAccident")
+    public String update(@RequestParam("id") int id, Model model) {
+
+        Optional<Accident> accident = accidents.findAccidentById(id);
+        accident.ifPresent(value -> model.addAttribute("accident", value));
+
+        Collection<AccidentType> types = accidents.findAllAccidentTypes();
+        model.addAttribute("types", types);
+
+        Collection<Rule> rules = accidents.findAllRules();
+        model.addAttribute("rules", rules);
+
+        return "accident/update";
     }
 
 //    @GetMapping("/")

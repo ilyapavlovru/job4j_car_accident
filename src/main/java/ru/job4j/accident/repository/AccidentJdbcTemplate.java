@@ -39,7 +39,7 @@ public class AccidentJdbcTemplate {
                 });
     }
 
-    public List<Accident> getAllAccidentsWithRules() {
+    public List<Accident> findAllAccidentsWithRules() {
         List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, "
                         + "accident_rule.rule_id, rule.name as rule_name "
                         + "from accident left join accident_rule on accident.id = accident_rule.accident_id "
@@ -72,6 +72,12 @@ public class AccidentJdbcTemplate {
                 .filter(ac -> ac.getId() == accident.getId())
                 .findAny()
                 .orElse(null);
+    }
+
+    public Optional<Accident> findAccidentById(int id) {
+        return findAllAccidentsWithRules().stream()
+                .filter(ac -> ac.getId() == id)
+                .findAny();
     }
 
     public Collection<AccidentType> findAllAccidentTypes() {
@@ -148,4 +154,15 @@ public class AccidentJdbcTemplate {
                 }, id);
         return Optional.ofNullable(accidentType);
     }
+
+//    public Optional<Accident> findAccidentById(int id) {
+//        Accident accident =  jdbc.queryForObject("select id, name from accident where id = ?",
+//                (rs, row) -> {
+//                    Accident foundAccident = new Accident();
+//                    foundAccident.setId(rs.getInt("id"));
+//                    foundAccident.setName(rs.getString("name"));
+//                    return foundAccident;
+//                }, id);
+//        return Optional.ofNullable(accident);
+//    }
 }
