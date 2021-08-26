@@ -41,14 +41,18 @@ public class AccidentJdbcTemplate {
 
     public List<Accident> findAllAccidentsWithRules() {
         List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, "
-                        + "accident_rule.rule_id, rule.name as rule_name "
-                        + "from accident left join accident_rule on accident.id = accident_rule.accident_id "
-                        + "left join rule on accident_rule.rule_id = rule.id",
+                        + "accident.type_id, accident_type.name as type_name, "
+                        + "accident_rule.rule_id, rule.name as rule_name from accident "
+                        + "left join accident_type on accident.type_id = accident_type.id "
+                        + "left join accident_rule on accident.id = accident_rule.accident_id "
+                        + "left join rule on accident_rule.rule_id = rule.id "
+                        + "order by accident_id",
                 (rs, row) -> {
                     Accident accident = new Accident();
                     accident.setId(rs.getInt("id"));
                     accident.setName(rs.getString("accident_name"));
                     accident.addRule(Rule.of(rs.getInt("rule_id"), rs.getString("rule_name")));
+                    accident.setType(AccidentType.of(rs.getInt("type_id"), rs.getString("type_name")));
                     return accident;
                 });
         return addRulesToAccidents(accidents);
@@ -102,6 +106,9 @@ public class AccidentJdbcTemplate {
 
     public Accident saveAccident(Accident accident, String[] ruleIds) {
 
+        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
+        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+
         for (String id : ruleIds) {
             Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
             optionalRule.ifPresent(rule -> {
@@ -112,9 +119,10 @@ public class AccidentJdbcTemplate {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbc.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement("insert into accident (name) values (?)",
+                    .prepareStatement("insert into accident (name, type_id) values (?, ?)",
                             Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, accident.getName());
+            ps.setInt(2, accident.getType().getId());
             return ps;
         }, holder);
 
@@ -154,6 +162,9 @@ public class AccidentJdbcTemplate {
 
     public void updateAccident(Accident accident, String[] ruleIds) {
 
+        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
+        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+
         for (String id : ruleIds) {
             Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
             optionalRule.ifPresent(rule -> {
@@ -161,8 +172,9 @@ public class AccidentJdbcTemplate {
             });
         }
 
-        jdbc.update("update accident set name = ? where id = ?",
+        jdbc.update("update accident set name = ?, type_id = ? where id = ?",
                 accident.getName(),
+                accident.getType().getId(),
                 accident.getId()
         );
 

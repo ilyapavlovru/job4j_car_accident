@@ -67,19 +67,26 @@
 
 <script>
 
+    const accidentTypeSelector = document.getElementById('accidentTypeSelector');
+    var accidentTypeId = '<c:out value="${accident.type.id}"/>';
+    console.log(accidentTypeId);
+    accidentTypeSelector.value = accidentTypeId;
+
     var optionsToSelect = [];
     <c:forEach items="${accident.rules}" var="rule">
         var ruleName = '<c:out value="${rule.name}"/>';
         optionsToSelect.push(ruleName);
     </c:forEach>
 
-    var select = document.getElementById('ruleTypeSelector');
-    for (var i = 0, l = select.options.length, o; i < l; i++) {
-        o = select.options[i];
+    var ruleTypeSelector = document.getElementById('ruleTypeSelector');
+    for (var i = 0, l = ruleTypeSelector.options.length, o; i < l; i++) {
+        o = ruleTypeSelector.options[i];
         if (optionsToSelect.indexOf(o.text) != -1) {
             o.selected = true;
         }
     }
+
+
 </script>
 
 </body>

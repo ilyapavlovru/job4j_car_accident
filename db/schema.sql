@@ -1,7 +1,8 @@
 create table accident
 (
     id   serial primary key,
-    name varchar(255)
+    name varchar(255),
+    type_id  int not null references accident_type (id)
 );
 
 create table rule

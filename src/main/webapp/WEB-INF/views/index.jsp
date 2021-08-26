@@ -28,10 +28,7 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент (old)</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value='/createAccidentForm'/>">Добавить инцидент</a>
+                <a class="nav-link" href="<c:url value='/createAccidentForm'/>">Добавить нарушение</a>
             </li>
         </ul>
     </div>
@@ -39,7 +36,7 @@
 </div>
 
 <div class="container">
-    <h2>Все заявления</h2>
+    <h2>Все нарушения</h2>
     <div class="row">
         <div class="col-12">
             <table class="table table-bordered" id='table'>
@@ -47,6 +44,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Наименование нарушения</th>
+                    <th scope="col">Тип нарушения</th>
                     <th scope="col">Статьи нарушения</th>
                 </tr>
                 </thead>
@@ -62,10 +60,15 @@
                         </td>
 
                         <td>
+                            <c:out value="${accident.type.name}"/>
+                        </td>
+
+                        <td>
                             <c:forEach items="${accident.rules}" var="rule">
                                 <c:out value="${rule.name}"/> <br>
                             </c:forEach>
                         </td>
+
 
                     </tr>
                 </c:forEach>

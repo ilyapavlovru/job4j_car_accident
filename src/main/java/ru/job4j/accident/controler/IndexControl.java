@@ -37,7 +37,7 @@ public class IndexControl {
     }
 
     @GetMapping("/createAccidentForm")
-    public String create(Model model) {
+    public String createAccidentForm(Model model) {
 
         Collection<AccidentType> types = accidents.findAllAccidentTypes();
         model.addAttribute("types", types);
@@ -49,14 +49,14 @@ public class IndexControl {
     }
 
     @PostMapping("/saveAccident")
-    public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
+    public String saveAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
         String[] rIds = req.getParameterValues("rIds");
         accidents.saveAccident(accident, rIds);
         return "redirect:/";
     }
 
     @GetMapping("/updateAccidentForm")
-    public String update(@RequestParam("id") int id, Model model) {
+    public String updateAccidentForm(@RequestParam("id") int id, Model model) {
 
         Optional<Accident> accident = accidents.findAccidentById(id);
         accident.ifPresent(value -> model.addAttribute("accident", value));
@@ -71,7 +71,7 @@ public class IndexControl {
     }
 
     @PostMapping("/updateAccident")
-    public String upd(@ModelAttribute Accident accident, HttpServletRequest req) {
+    public String updateAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
         String[] rIds = req.getParameterValues("rIds");
         accidents.updateAccident(accident, rIds);
         return "redirect:/";
