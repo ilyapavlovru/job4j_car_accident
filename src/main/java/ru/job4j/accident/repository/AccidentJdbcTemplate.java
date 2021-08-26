@@ -102,9 +102,6 @@ public class AccidentJdbcTemplate {
 
     public Accident saveAccident(Accident accident, String[] ruleIds) {
 
-        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
-        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
-
         for (String id : ruleIds) {
             Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
             optionalRule.ifPresent(rule -> {
@@ -153,6 +150,31 @@ public class AccidentJdbcTemplate {
                     return foundAccidentType;
                 }, id);
         return Optional.ofNullable(accidentType);
+    }
+
+    public void updateAccident(Accident accident, String[] ruleIds) {
+
+        for (String id : ruleIds) {
+            Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
+            optionalRule.ifPresent(rule -> {
+                accident.addRule(rule);
+            });
+        }
+
+        jdbc.update("update accident set name = ? where id = ?",
+                accident.getName(),
+                accident.getId()
+        );
+
+        jdbc.update("delete from accident_rule where accident_id = ?",
+                accident.getId());
+
+        for (Rule rule : accident.getRules()) {
+            jdbc.update(
+                    "INSERT INTO accident_rule (accident_id, rule_id) VALUES (?, ?)",
+                    accident.getId(), rule.getId()
+            );
+        }
     }
 
 //    public Optional<Accident> findAccidentById(int id) {

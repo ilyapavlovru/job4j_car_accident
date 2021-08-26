@@ -31,7 +31,7 @@
             </div>
 
             <div class="card-body">
-                <form action="<c:url value='/saveAccident?id=${accident.id}'/>" method="post">
+                <form action="<c:url value='/updateAccident?id=${accident.id}'/>" method="post">
 
                     <div class="form-group">
                         <label>Заголовок нарушения:</label>
@@ -41,7 +41,6 @@
                     <div class="form-group">
                         <label for="accidentTypeSelector">Тип нарушения:</label>
                         <select class="form-control" id="accidentTypeSelector" name="type.id">
-                            <option selected value="${accident.type.id}">${accident.type.name}</option>
                             <c:forEach var="type" items="${types}" >
                                 <option value="${type.id}">${type.name}</option>
                             </c:forEach>

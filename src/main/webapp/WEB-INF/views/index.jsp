@@ -31,7 +31,7 @@
                 <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент (old)</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value='/createAccident'/>">Добавить инцидент</a>
+                <a class="nav-link" href="<c:url value='/createAccidentForm'/>">Добавить инцидент</a>
             </li>
         </ul>
     </div>
@@ -55,7 +55,7 @@
                 <c:forEach items="${accidents}" var="accident">
                     <tr>
                         <td>
-                            <a href='<c:url value="/updateAccident?id=${accident.id}"/>'>
+                            <a href='<c:url value="/updateAccidentForm?id=${accident.id}"/>'>
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
                             <c:out value="${accident.name}"/>
