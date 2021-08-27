@@ -39,6 +39,21 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Адрес нарушения:</label>
+                        <input type="text" class="form-control" id="address" name="address" value="${accident.address}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Номер машины:</label>
+                        <input type="text" class="form-control" id="carNumber" name="carNumber" value="${accident.carNumber}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descriptionTextArea">Описание:</label>
+                        <textarea class="form-control" id="descriptionTextArea" name = "description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="accidentTypeSelector">Тип нарушения:</label>
                         <select class="form-control" id="accidentTypeSelector" name="type.id">
                             <c:forEach var="type" items="${types}" >
@@ -76,6 +91,9 @@
 </div>
 
 <script>
+
+    var accidentDescription = '<c:out value="${accident.description}"/>';
+    $('#descriptionTextArea').val(accidentDescription);
 
     var accidentStatus = '<c:out value="${accident.status}"/>';
     $('#accidentStatusSelector').val(accidentStatus);

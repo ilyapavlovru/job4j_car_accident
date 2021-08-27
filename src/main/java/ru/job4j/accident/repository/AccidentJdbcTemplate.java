@@ -181,8 +181,11 @@ public class AccidentJdbcTemplate {
             });
         }
 
-        jdbc.update("update accident set name = ?, status = ?, type_id = ? where id = ?",
+        jdbc.update("update accident set name = ?, address = ?, car_number = ?, description = ?, status = ?, type_id = ? where id = ?",
                 accident.getName(),
+                accident.getAddress(),
+                accident.getCarNumber(),
+                accident.getDescription(),
                 accident.getStatus(),
                 accident.getType().getId(),
                 accident.getId()
