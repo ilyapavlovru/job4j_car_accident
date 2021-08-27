@@ -74,7 +74,6 @@
                     <div class="form-group">
                         <label for="accidentStatusSelector">Статус заявки:</label>
                         <select class="form-control" id="accidentStatusSelector" name = "status">
-                            <option selected value="">Выберите статус заявки</option>
                             <option value="Принята">Принята</option>
                             <option value="Отклонена">Отклонена</option>
                             <option value="Завершена">Завершена</option>
