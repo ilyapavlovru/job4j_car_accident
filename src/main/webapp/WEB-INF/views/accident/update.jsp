@@ -56,6 +56,16 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="accidentStatusSelector">Статус заявки:</label>
+                        <select class="form-control" id="accidentStatusSelector" name = "status">
+                            <option selected value="">Выберите статус заявки</option>
+                            <option value="Принята">Принята</option>
+                            <option value="Отклонена">Отклонена</option>
+                            <option value="Завершена">Завершена</option>
+                        </select>
+                    </div>
+
                     <input type="hidden" name="action" value="update"/>
                     <button type="submit" value="UPDATE" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
@@ -67,9 +77,11 @@
 
 <script>
 
+    var accidentStatus = '<c:out value="${accident.status}"/>';
+    $('#accidentStatusSelector').val(accidentStatus);
+
     const accidentTypeSelector = document.getElementById('accidentTypeSelector');
     var accidentTypeId = '<c:out value="${accident.type.id}"/>';
-    console.log(accidentTypeId);
     accidentTypeSelector.value = accidentTypeId;
 
     var optionsToSelect = [];

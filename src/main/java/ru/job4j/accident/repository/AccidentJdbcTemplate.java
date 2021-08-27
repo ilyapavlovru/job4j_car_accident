@@ -40,7 +40,9 @@ public class AccidentJdbcTemplate {
     }
 
     public List<Accident> findAllAccidentsWithRules() {
-        List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, "
+        List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, accident.car_number, accident.address, "
+                        + "accident.description, "
+                        + "accident.status as accident_status, "
                         + "accident.type_id, accident_type.name as type_name, "
                         + "accident_rule.rule_id, rule.name as rule_name from accident "
                         + "left join accident_type on accident.type_id = accident_type.id "
@@ -51,6 +53,10 @@ public class AccidentJdbcTemplate {
                     Accident accident = new Accident();
                     accident.setId(rs.getInt("id"));
                     accident.setName(rs.getString("accident_name"));
+                    accident.setCarNumber(rs.getString("car_number"));
+                    accident.setAddress(rs.getString("address"));
+                    accident.setDescription(rs.getString("description"));
+                    accident.setStatus(rs.getString("accident_status"));
                     accident.addRule(Rule.of(rs.getInt("rule_id"), rs.getString("rule_name")));
                     accident.setType(AccidentType.of(rs.getInt("type_id"), rs.getString("type_name")));
                     return accident;
@@ -119,10 +125,13 @@ public class AccidentJdbcTemplate {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbc.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement("insert into accident (name, type_id) values (?, ?)",
+                    .prepareStatement("insert into accident (name, address, car_number, description, type_id) values (?, ?, ?, ?, ?)",
                             Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, accident.getName());
-            ps.setInt(2, accident.getType().getId());
+            ps.setString(2, accident.getAddress());
+            ps.setString(3, accident.getCarNumber());
+            ps.setString(4, accident.getDescription());
+            ps.setInt(5, accident.getType().getId());
             return ps;
         }, holder);
 
@@ -172,8 +181,9 @@ public class AccidentJdbcTemplate {
             });
         }
 
-        jdbc.update("update accident set name = ?, type_id = ? where id = ?",
+        jdbc.update("update accident set name = ?, status = ?, type_id = ? where id = ?",
                 accident.getName(),
+                accident.getStatus(),
                 accident.getType().getId(),
                 accident.getId()
         );

@@ -44,8 +44,12 @@
                 <thead>
                 <tr>
                     <th scope="col">Наименование нарушения</th>
+                    <th scope="col">Номер автомобиля</th>
+                    <th scope="col">Адрес нарушения</th>
+                    <th scope="col">Описание</th>
                     <th scope="col">Тип нарушения</th>
                     <th scope="col">Статьи нарушения</th>
+                    <th scope="col">Статус заявки</th>
                 </tr>
                 </thead>
 
@@ -60,6 +64,18 @@
                         </td>
 
                         <td>
+                            <c:out value="${accident.carNumber}"/>
+                        </td>
+
+                        <td>
+                            <c:out value="${accident.address}"/>
+                        </td>
+
+                        <td>
+                            <c:out value="${accident.description}"/>
+                        </td>
+
+                        <td>
                             <c:out value="${accident.type.name}"/>
                         </td>
 
@@ -69,6 +85,9 @@
                             </c:forEach>
                         </td>
 
+                        <td>
+                            <c:out value="${accident.status}"/>
+                        </td>
 
                     </tr>
                 </c:forEach>
