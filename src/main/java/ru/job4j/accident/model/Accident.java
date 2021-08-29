@@ -15,7 +15,6 @@ public class Accident {
     private String carNumber;
     private String address;
     private byte[] image;
-
     private String status;
     private Date created;
 

@@ -16,17 +16,11 @@ public class AccidentHibernate {
         this.sf = sf;
     }
 
-    public Accident save(Accident accident) {
-        try (Session session = sf.openSession()) {
-            session.save(accident);
-            return accident;
-        }
-    }
-
     public List<Accident> findAllAccidentsWithRules() {
         try (Session session = sf.openSession()) {
             return session
-                    .createQuery("select distinct ac from ru.job4j.accident.model.Accident ac join fetch ac.rules", Accident.class)
+                    .createQuery("select distinct ac from ru.job4j.accident.model.Accident ac "
+                                  + "join fetch ac.rules order by ac.id", Accident.class)
                     .list();
         }
     }
@@ -47,13 +41,20 @@ public class AccidentHibernate {
         }
     }
 
-    public void saveAccident(Accident accident, String[] rIds) {
-
+    public Accident saveAccident(Accident accident, String[] ruleIds) {
         AccidentType accidentType = findAccidentTypeById(accident.getType().getId());
         accident.setType(accidentType);
-        accident.setStatus("Принята");
 
-        addAccident(accident, rIds);
+        try (Session session = sf.openSession()) {
+            session.beginTransaction();
+            for (String id : ruleIds) {
+                Rule rule = session.find(Rule.class, Integer.parseInt(id));
+                accident.addRule(rule);
+            }
+            session.saveOrUpdate(accident);
+            session.getTransaction().commit();
+            return accident;
+        }
     }
 
     private AccidentType findAccidentTypeById(int id) {
@@ -63,16 +64,13 @@ public class AccidentHibernate {
         }
     }
 
-    private Accident addAccident(Accident accident, String[] ruleIds) {
+    public Accident findAccidentById(int id) {
         try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            for (String id : ruleIds) {
-                Rule rule = session.find(Rule.class, Integer.parseInt(id));
-                accident.addRule(rule);
-            }
-            session.save(accident);
-            session.getTransaction().commit();
-            return accident;
+            return session
+                    .createQuery("select distinct ac from ru.job4j.accident.model.Accident ac "
+                                  + "join fetch ac.rules where ac.id = :id", Accident.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
         }
     }
 }
