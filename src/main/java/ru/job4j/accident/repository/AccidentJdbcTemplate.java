@@ -40,8 +40,8 @@ public class AccidentJdbcTemplate {
     }
 
     public List<Accident> findAllAccidentsWithRules() {
-        List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, accident.car_number, accident.address, "
-                        + "accident.description, "
+        List<Accident> accidents = jdbc.query("select accident.id, accident.name as accident_name, "
+                        + "accident.car_number, accident.address, accident.description, "
                         + "accident.status as accident_status, "
                         + "accident.type_id, accident_type.name as type_name, "
                         + "accident_rule.rule_id, rule.name as rule_name from accident "
@@ -111,17 +111,7 @@ public class AccidentJdbcTemplate {
     }
 
     public Accident saveAccident(Accident accident, String[] ruleIds) {
-
-        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
-        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
-
-        for (String id : ruleIds) {
-            Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
-            optionalRule.ifPresent(rule -> {
-                accident.addRule(rule);
-            });
-        }
-
+        setTypeAndRules(accident, ruleIds);
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbc.update(connection -> {
             PreparedStatement ps = connection
@@ -134,16 +124,13 @@ public class AccidentJdbcTemplate {
             ps.setInt(5, accident.getType().getId());
             return ps;
         }, holder);
-
         accident.setId((int) holder.getKeys().get("id"));
-
         for (Rule rule : accident.getRules()) {
             jdbc.update(
                     "INSERT INTO accident_rule (accident_id, rule_id) VALUES (?, ?)",
                     accident.getId(), rule.getId()
             );
         }
-
         return accident;
     }
 
@@ -170,17 +157,7 @@ public class AccidentJdbcTemplate {
     }
 
     public void updateAccident(Accident accident, String[] ruleIds) {
-
-        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
-        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
-
-        for (String id : ruleIds) {
-            Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
-            optionalRule.ifPresent(rule -> {
-                accident.addRule(rule);
-            });
-        }
-
+        setTypeAndRules(accident, ruleIds);
         jdbc.update("update accident set name = ?, address = ?, car_number = ?, description = ?, status = ?, type_id = ? where id = ?",
                 accident.getName(),
                 accident.getAddress(),
@@ -190,10 +167,8 @@ public class AccidentJdbcTemplate {
                 accident.getType().getId(),
                 accident.getId()
         );
-
         jdbc.update("delete from accident_rule where accident_id = ?",
                 accident.getId());
-
         for (Rule rule : accident.getRules()) {
             jdbc.update(
                     "INSERT INTO accident_rule (accident_id, rule_id) VALUES (?, ?)",
@@ -202,14 +177,14 @@ public class AccidentJdbcTemplate {
         }
     }
 
-//    public Optional<Accident> findAccidentById(int id) {
-//        Accident accident =  jdbc.queryForObject("select id, name from accident where id = ?",
-//                (rs, row) -> {
-//                    Accident foundAccident = new Accident();
-//                    foundAccident.setId(rs.getInt("id"));
-//                    foundAccident.setName(rs.getString("name"));
-//                    return foundAccident;
-//                }, id);
-//        return Optional.ofNullable(accident);
-//    }
+    private void setTypeAndRules(Accident accident, String[] ruleIds) {
+        Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
+        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+        for (String id : ruleIds) {
+            Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
+            optionalRule.ifPresent(rule -> {
+                accident.addRule(rule);
+            });
+        }
+    }
 }

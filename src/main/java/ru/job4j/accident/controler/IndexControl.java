@@ -18,17 +18,11 @@ import java.util.Optional;
 @Controller
 public class IndexControl {
 
-//    private AccidentService accidentService;
-
     private final AccidentJdbcTemplate accidents;
 
     public IndexControl(AccidentJdbcTemplate accidents) {
         this.accidents = accidents;
     }
-
-//    public IndexControl(AccidentService accidentService) {
-//        this.accidentService = accidentService;
-//    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -76,11 +70,4 @@ public class IndexControl {
         accidents.updateAccident(accident, rIds);
         return "redirect:/";
     }
-
-//    @GetMapping("/")
-//    public String index(Model model) {
-//        Collection<Accident> accidents = accidentService.findAllAccidents();
-//        model.addAttribute("accidents", accidents);
-//        return "index";
-//    }
 }

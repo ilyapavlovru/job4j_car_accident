@@ -90,7 +90,6 @@
 </div>
 
 <script>
-
     var accidentDescription = '<c:out value="${accident.description}"/>';
     $('#descriptionTextArea').val(accidentDescription);
 
@@ -114,9 +113,6 @@
             o.selected = true;
         }
     }
-
-
 </script>
-
 </body>
 </html>
