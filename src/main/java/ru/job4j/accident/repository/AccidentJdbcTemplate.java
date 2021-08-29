@@ -180,6 +180,7 @@ public class AccidentJdbcTemplate {
     private void setTypeAndRules(Accident accident, String[] ruleIds) {
         Optional<AccidentType> accidentType = findAccidentTypeById(accident.getType().getId());
         accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+
         for (String id : ruleIds) {
             Optional<Rule> optionalRule = findRuleById(Integer.parseInt(id));
             optionalRule.ifPresent(rule -> {
