@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository
 public class AccidentJdbcTemplate {
 
     private final JdbcTemplate jdbc;
@@ -44,10 +44,10 @@ public class AccidentJdbcTemplate {
                         + "accident.car_number, accident.address, accident.description, "
                         + "accident.status as accident_status, "
                         + "accident.type_id, accident_type.name as type_name, "
-                        + "accident_rule.rule_id, rule.name as rule_name from accident "
+                        + "accident_rule.rules_id, rule.name as rule_name from accident "
                         + "left join accident_type on accident.type_id = accident_type.id "
                         + "left join accident_rule on accident.id = accident_rule.accident_id "
-                        + "left join rule on accident_rule.rule_id = rule.id "
+                        + "left join rule on accident_rule.rules_id = rule.id "
                         + "order by accident_id",
                 (rs, row) -> {
                     Accident accident = new Accident();
@@ -127,7 +127,7 @@ public class AccidentJdbcTemplate {
         accident.setId((int) holder.getKeys().get("id"));
         for (Rule rule : accident.getRules()) {
             jdbc.update(
-                    "INSERT INTO accident_rule (accident_id, rule_id) VALUES (?, ?)",
+                    "INSERT INTO accident_rule (accident_id, rules_id) VALUES (?, ?)",
                     accident.getId(), rule.getId()
             );
         }
@@ -171,7 +171,7 @@ public class AccidentJdbcTemplate {
                 accident.getId());
         for (Rule rule : accident.getRules()) {
             jdbc.update(
-                    "INSERT INTO accident_rule (accident_id, rule_id) VALUES (?, ?)",
+                    "INSERT INTO accident_rule (accident_id, rules_id) VALUES (?, ?)",
                     accident.getId(), rule.getId()
             );
         }

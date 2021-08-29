@@ -47,26 +47,26 @@ public class AccidentMem implements Store {
         Accident accident1 = new Accident("нарушение 1");
         accident1.setId(1);
         accident1.setType(accidentTypes.get(1));
-        accident1.setRules(firstRulesSet);
+//        accident1.setRules(firstRulesSet);
         accident1.setDescription("описание нарушения 1");
         accident1.setCarNumber("н777ту178");
         accident1.setAddress("СПБ, ул. Симонова, д. 1");
         accident1.setImage(null);
         accident1.setStatus("Принята");
         accident1.setCreated(new Date(System.currentTimeMillis()));
-        accident1.setUser(user);
+//        accident1.setUser(user);
 
         Accident accident2 = new Accident("нарушение 2");
         accident2.setId(2);
         accident2.setType(accidentTypes.get(2));
-        accident2.setRules(secondRulesSet);
+//        accident2.setRules(secondRulesSet);
         accident2.setDescription("описание нарушения 2");
         accident2.setCarNumber("с008уу78");
         accident2.setAddress("СПБ, ул. Кустодиева, д. 25");
         accident2.setImage(null);
         accident2.setStatus("Принята");
         accident2.setCreated(new Date(System.currentTimeMillis()));
-        accident2.setUser(user);
+//        accident2.setUser(user);
 
         accidents.put(1, accident1);
         accidents.put(2, accident2);

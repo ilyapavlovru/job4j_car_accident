@@ -1,9 +1,15 @@
 package ru.job4j.accident.model;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private String description;
     private String carNumber;
@@ -12,8 +18,12 @@ public class Accident {
 
     private String status;
     private Date created;
-    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
     private AccidentType type;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Set<Rule> rules = new HashSet<>();
 
     public Accident(String name) {
@@ -88,14 +98,6 @@ public class Accident {
         this.created = created;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public AccidentType getType() {
         return type;
     }
@@ -131,13 +133,12 @@ public class Accident {
                 && Objects.equals(address, accident.address)
                 && Arrays.equals(image, accident.image)
                 && Objects.equals(status, accident.status)
-                && Objects.equals(created, accident.created)
-                && Objects.equals(user, accident.user);
+                && Objects.equals(created, accident.created);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, description, address, status, created, user);
+        int result = Objects.hash(id, name, description, address, status, created);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }
