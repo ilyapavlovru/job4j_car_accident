@@ -9,33 +9,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentHibernate;
+import ru.job4j.accident.repository.AccidentRepository;
+import ru.job4j.accident.repository.AccidentRuleRepository;
+import ru.job4j.accident.repository.AccidentTypeRepository;
+import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class IndexControl {
 
-    private final AccidentHibernate accidents;
+    private final AccidentRepository accidents;
 
-    public IndexControl(AccidentHibernate accidents) {
+    private final AccidentTypeRepository accidentTypes;
+
+    private final AccidentRuleRepository accidentRules;
+
+    private final AccidentService accidentService;
+
+    public IndexControl(AccidentRepository accidents, AccidentTypeRepository accidentTypes, AccidentRuleRepository accidentRules,
+                        AccidentService accidentService) {
         this.accidents = accidents;
+        this.accidentTypes = accidentTypes;
+        this.accidentRules = accidentRules;
+        this.accidentService = accidentService;
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Accident> accidentList = accidents.findAllAccidentsWithRules();
-        model.addAttribute("accidents", accidentList);
+        List<Accident> res = new ArrayList<>();
+        accidents.findAll().forEach(res::add);
+        model.addAttribute("accidents", res);
         return "index";
     }
 
     @GetMapping("/createAccidentForm")
     public String createAccidentForm(Model model) {
-        Collection<AccidentType> types = accidents.findAllAccidentTypes();
+        List<AccidentType> types = new ArrayList<>();
+        accidentTypes.findAll().forEach(types::add);
         model.addAttribute("types", types);
-        Collection<Rule> rules = accidents.findAllRules();
+        List<Rule> rules = new ArrayList<>();
+        accidentRules.findAll().forEach(rules::add);
         model.addAttribute("rules", rules);
         return "accident/create";
     }
@@ -44,25 +60,25 @@ public class IndexControl {
     public String saveAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
         accident.setStatus("Принята");
         String[] rIds = req.getParameterValues("rIds");
-        accidents.saveAccident(accident, rIds);
+        accidentService.saveAccident(accident, rIds);
         return "redirect:/";
     }
 
-    @GetMapping("/updateAccidentForm")
-    public String updateAccidentForm(@RequestParam("id") int id, Model model) {
-        Accident accident = accidents.findAccidentById(id);
-        model.addAttribute("accident", accident);
-        Collection<AccidentType> types = accidents.findAllAccidentTypes();
-        model.addAttribute("types", types);
-        Collection<Rule> rules = accidents.findAllRules();
-        model.addAttribute("rules", rules);
-        return "accident/update";
-    }
-
-    @PostMapping("/updateAccident")
-    public String updateAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
-        String[] rIds = req.getParameterValues("rIds");
-        accidents.saveAccident(accident, rIds);
-        return "redirect:/";
-    }
+//    @GetMapping("/updateAccidentForm")
+//    public String updateAccidentForm(@RequestParam("id") int id, Model model) {
+//        Accident accident = accidents.findAccidentById(id);
+//        model.addAttribute("accident", accident);
+//        Collection<AccidentType> types = accidents.findAllAccidentTypes();
+//        model.addAttribute("types", types);
+//        Collection<Rule> rules = accidents.findAllRules();
+//        model.addAttribute("rules", rules);
+//        return "accident/update";
+//    }
+//
+//    @PostMapping("/updateAccident")
+//    public String updateAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
+//        String[] rIds = req.getParameterValues("rIds");
+//        accidents.saveAccident(accident, rIds);
+//        return "redirect:/";
+//    }
 }
