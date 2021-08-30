@@ -9,6 +9,7 @@ import ru.job4j.accident.repository.AccidentRepository;
 import ru.job4j.accident.repository.AccidentRuleRepository;
 import ru.job4j.accident.repository.AccidentTypeRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,9 @@ public class AccidentService {
 
     public Optional<Accident> findAccidentById(int id) {
         return accidentRepository.findById(id);
+    }
+
+    public List<Accident> findAllAccidents() {
+        return accidentRepository.findAll();
     }
 }
