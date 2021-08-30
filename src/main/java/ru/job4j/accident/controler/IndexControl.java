@@ -47,12 +47,15 @@ public class IndexControl {
 
     @GetMapping("/createAccidentForm")
     public String createAccidentForm(Model model) {
+
         List<AccidentType> types = new ArrayList<>();
         accidentTypes.findAll().forEach(types::add);
         model.addAttribute("types", types);
+
         List<Rule> rules = new ArrayList<>();
         accidentRules.findAll().forEach(rules::add);
         model.addAttribute("rules", rules);
+
         return "accident/create";
     }
 
@@ -64,21 +67,27 @@ public class IndexControl {
         return "redirect:/";
     }
 
-//    @GetMapping("/updateAccidentForm")
-//    public String updateAccidentForm(@RequestParam("id") int id, Model model) {
-//        Accident accident = accidents.findAccidentById(id);
-//        model.addAttribute("accident", accident);
-//        Collection<AccidentType> types = accidents.findAllAccidentTypes();
-//        model.addAttribute("types", types);
-//        Collection<Rule> rules = accidents.findAllRules();
-//        model.addAttribute("rules", rules);
-//        return "accident/update";
-//    }
-//
-//    @PostMapping("/updateAccident")
-//    public String updateAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
-//        String[] rIds = req.getParameterValues("rIds");
-//        accidents.saveAccident(accident, rIds);
-//        return "redirect:/";
-//    }
+    @GetMapping("/updateAccidentForm")
+    public String updateAccidentForm(@RequestParam("id") int id, Model model) {
+
+        Accident accident = accidentService.findAccidentById(id).get();
+        model.addAttribute("accident", accident);
+
+        List<AccidentType> types = new ArrayList<>();
+        accidentTypes.findAll().forEach(types::add);
+        model.addAttribute("types", types);
+
+        List<Rule> rules = new ArrayList<>();
+        accidentRules.findAll().forEach(rules::add);
+        model.addAttribute("rules", rules);
+
+        return "accident/update";
+    }
+
+    @PostMapping("/updateAccident")
+    public String updateAccident(@ModelAttribute Accident accident, HttpServletRequest req) {
+        String[] rIds = req.getParameterValues("rIds");
+        accidentService.saveAccident(accident, rIds);
+        return "redirect:/";
+    }
 }

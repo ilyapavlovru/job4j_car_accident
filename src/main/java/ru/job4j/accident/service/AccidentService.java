@@ -28,12 +28,16 @@ public class AccidentService {
     public void saveAccident(Accident accident, String[] ruleIds) {
 
         Optional<AccidentType> accidentType = accidentTypeRepository.findById(accident.getType().getId());
-        accidentType.ifPresent(value -> accident.setType(accidentType.get()));
+        accident.setType(accidentType.get());
 
         for (String id : ruleIds) {
             Rule rule = accidentRuleRepository.findById(Integer.parseInt(id)).get();
             accident.addRule(rule);
         }
         accidentRepository.save(accident);
+    }
+
+    public Optional<Accident> findAccidentById(int id) {
+        return accidentRepository.findById(id);
     }
 }
