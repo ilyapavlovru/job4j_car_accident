@@ -23,12 +23,12 @@
 </head>
 
 <body>
+
 <c:if test="${not empty errorMessage}">
     <div style="color:red; font-weight: bold; text-align: center;">
             ${errorMessage}
     </div>
 </c:if>
-
 
 <div class="container pt-3">
     <div class="row">

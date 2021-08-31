@@ -25,6 +25,9 @@
 <body>
 
 <div class="container">
+    <div>
+        Login as : ${user.username}
+    </div>
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
