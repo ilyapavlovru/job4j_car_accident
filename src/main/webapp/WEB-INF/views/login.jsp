@@ -49,6 +49,14 @@
                     <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form>
+                <hr align="left" size="5">
+                <div class="row">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<c:url value='/reg'/>"> Регистрация</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

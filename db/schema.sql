@@ -21,17 +21,24 @@ create table accident_type
     name varchar(255) not null
 );
 
-create table users
-  (
-      username varchar(50)  not null,
-      password varchar(100) not null,
-      enabled  boolean default true,
-      primary key (username)
-  );
-
-create table authorities
+CREATE TABLE authorities
 (
-    username  varchar(50) not null,
-    authority varchar(50) not null,
-    foreign key (username) references users (username)
+    id        serial primary key,
+    authority varchar(50) not null unique
 );
+
+CREATE TABLE users
+(
+    id           serial primary key,
+    username     varchar(50)  not null unique,
+    password     varchar(100) not null,
+    enabled      boolean default true,
+    authority_id int          not null references authorities (id)
+);
+
+insert into authorities (authority) values ('ROLE_USER');
+insert into authorities (authority) values ('ROLE_ADMIN');
+
+insert into users (username, enabled, password, authority_id)
+values ('root', true, '$2a$10$v0C5DXq7VSEgnf1iBHxujONhRJAxcPqzpSzLo6AGf3MBNd8Niy/6O',
+        (select id from authorities where authority = 'ROLE_ADMIN'));
