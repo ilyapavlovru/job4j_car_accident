@@ -39,11 +39,11 @@
             <div class="card-body">
                 <form name='login' action="<c:url value='/login'/>" method='POST'>
                     <div class="form-group">
-                        <label>UserName</label>
+                        <label>Имя</label>
                         <input type="text" class="form-control" id="username" name="username">
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
+                        <label>Пароль</label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>

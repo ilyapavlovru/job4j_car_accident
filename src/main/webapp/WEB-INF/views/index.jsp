@@ -25,13 +25,13 @@
 <body>
 
 <div class="container">
-    <div>
-        Login as : ${user.username}
-    </div>
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value='/createAccidentForm'/>">Добавить нарушение</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/login'/>"> ${user.username} | Выйти</a>
             </li>
         </ul>
     </div>

@@ -30,7 +30,7 @@
                 <form name='login' action="<c:url value='/reg'/>" method='POST'>
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" id="username" name="username">
+                        <input type="text" class="form-control" id="userName" name="userName">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
@@ -42,7 +42,7 @@
                 <div class="row">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="<c:url value='/reg'/>"> Авторизация</a>
+                            <a class="nav-link" href="<c:url value='/login'/>"> Авторизация</a>
                         </li>
                     </ul>
                 </div>
