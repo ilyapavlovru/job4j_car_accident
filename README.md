@@ -35,3 +35,8 @@
 
 Просмотр всех нарушений
 ![ScreenShot](images/2021-11-04_223327.png)
+
+**Контакты:**
+
+[![telegram](https://img.shields.io/badge/Telegram-gray?style=for-the-badge&logo=Telegram&logoColor=white)](https://t.me/pavlovilyaru)
+[![email](https://img.shields.io/badge/Mail.Ru-blue?style=for-the-badge&logo=Mail.Ru&logoColor=white)](mailto:ilya.pavlov@list.ru)
